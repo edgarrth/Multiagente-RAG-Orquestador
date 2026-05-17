@@ -21,22 +21,22 @@ Arquitectura y flujo general
 - Database (`src/database/database.py`): persistencia en Supabase para memorias, sesiones y logs.
 
 Agentes que participan
-- Orchestrator (prompt en `src/core/system.py`): decide a qué agente enviar la consulta y
+- **Orchestrator** (prompt en `src/core/system.py`): decide a qué agente enviar la consulta y
   coordina el uso de contexto. Responde consultas generales si no se requiere otro agente.
-- RAG_Agent: especializado en consultas sobre documentos; recibe documentos recuperados
+- **RAG_Agent**: especializado en consultas sobre documentos; recibe documentos recuperados
   por el `RAGSystem` y genera respuestas basadas en ellos.
-- Marketing_Agent: genera plantillas de email, estrategias, propuestas y recomendaciones
+- **Marketing_Agent**: genera plantillas de email, estrategias, propuestas y recomendaciones
   de marketing. Recibe documentos y memorias como contexto.
-- Knowledge_Agent: gestiona la memoria a largo plazo; puede sugerir guardar insights
+- **Knowledge_Agent**: gestiona la memoria a largo plazo; puede sugerir guardar insights
   y ejecutar operaciones de persistencia en la base de datos.
 
 Detalles del subsistema RAG
-- Ingesta: `RAGSystem.load_pdf(pdf_path)` usa `pypdf` para extraer texto y lo divide en chunks
+- **Ingesta**: `RAGSystem.load_pdf(pdf_path)` usa `pypdf` para extraer texto y lo divide en chunks
   con tamaño y overlap definidos en `src/config/settings.py` (`chunk_size`, `chunk_overlap`).
-- Embeddings: `RAGSystem.generate_embedding(text)` llama a OpenAI para obtener vectores.
-- Indexación: `index_documents` sube batches a Pinecone y guarda metadata mínima por chunk.
-- Recuperación: `search(query, top_k)` genera embedding de la query y consulta Pinecone.
-- Generación: `answer_question` arma un prompt que incluye los documentos recuperados y
+- **Embeddings**: `RAGSystem.generate_embedding(text)` llama a OpenAI para obtener vectores.
+- **Indexación**: `index_documents` sube batches a Pinecone y guarda metadata mínima por chunk.
+- **Recuperación**: `search(query, top_k)` genera embedding de la query y consulta Pinecone.
+- **Generación**: `answer_question` arma un prompt que incluye los documentos recuperados y
   llama al modelo de chat para sintetizar la respuesta.
 
 Tecnologías y dependencias principales
